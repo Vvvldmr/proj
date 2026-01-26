@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 class="card-title">{{ project.name }}</h3>
+            <p class="card-text">{{ project.description }}</p>
+            
+            <div class="project-info mt-3">
+                <p><strong>Статус проекта:</strong> 
+                    <span class="badge 
+                        {% if project.status == 'active' %}bg-success
+                        {% elif project.status == 'completed' %}bg-primary
+                        {% else %}bg-warning{% endif %}">
+                        {{ project.get_status_display }}
+                    </span>
+                </p>
+                <p><strong>Дедлайн:</strong> {{ project.deadline|date:"d.m.Y H:i" }}</p>
+                <p><strong>Создано:</strong> {{ project.created_at|date:"d.m.Y H:i" }}</p>
+                <p><strong>Обновлено:</strong> {{ project.updated_at|date:"d.m.Y H:i" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Список задач -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4>Задачи проекта</h4>
+            <span class="badge bg-primary">{{ project.tasks.count }} задач</span>
+        </div>
+        <div class="card-body">
+            {% if project.tasks.all %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Статус</th>
+                                <th>Приоритет</th>
+                                <th>Дедлайн</th>
+                                <th>Создатель</th>
+                                <th>Дата создания</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in project.tasks.all %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ task.name }}</strong>
+                                        <br>
+                                        <small class="text-muted">{{ task.description|truncatechars:100 }}</small>
+                                    </td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if task.status == 'todo' %}bg-secondary
+                                            {% elif task.status == 'in_progress' %}bg-primary
+                                            {% else %}bg-success{% endif %}">
+                                            {{ task.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if task.priority == 'high' %}bg-danger
+                                            {% elif task.priority == 'medium' %}bg-warning
+                                            {% else %}bg-success{% endif %}">
+                                            {{ task.get_priority_display }}
+                                        </span>
+                                    </td>
+                                    <td>{{ task.deadline|date:"d.m.Y H:i" }}</td>
+                                    <td>{{ task.created_by.username }}</td>
+                                    <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    В этом проекте пока нет задач.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <br>
+    <a href="{% url 'projects_list' %}" class="btn btn-secondary">
+        ← Назад к списку проектов
+    </a>
+{% endblock %}

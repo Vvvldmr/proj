@@ -61,22 +61,13 @@ class Tasks(models.Model):
         default=Priority.MEDIUM
     )
     project = models.ForeignKey(
-        Project,
+        Projects,
         on_delete=models.CASCADE,
         related_name='tasks',
         verbose_name=('Проект')
     )
     created_at = models.DateTimeField(('Создана'), auto_now_add=True)
     updated_at = models.DateTimeField(('Обновлена'), auto_now=True)
-    # Связь с пользователем (исполнитель задачи)
-    assigned_to = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='assigned_tasks',
-        verbose_name=('Исполнитель')
-    )
     
     # Связь с пользователем (создатель задачи)
     created_by = models.ForeignKey(
@@ -87,7 +78,7 @@ class Tasks(models.Model):
     )
     
     class Meta:
-        verbose_name = _('Задача')
+        verbose_name = ('Задача')
         verbose_name_plural = ('Задачи')
         ordering = ['priority', 'deadline']
     

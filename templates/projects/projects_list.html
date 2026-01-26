@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if projects %}
+        <ul class="list-group">
+            {% for project in projects %}
+                <li class="list-group-item">
+                    <a href="{% url 'project_deteil' project.id %}">{{ project.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Проектов пока нет.</p>
+    {% endif %}
+{% endblock %}
