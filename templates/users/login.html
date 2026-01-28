@@ -1,0 +1,8 @@
+<h2>Вход</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Войти</button>
+</form>
+<p>Нет аккаунта? <a href="{% url 'registration' %}">Зарегистрироваться</a></p>
+{% comment %} <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p> {% endcomment %}

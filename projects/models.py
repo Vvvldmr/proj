@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Projects(models.Model):
+class Project(models.Model):
     class Status(models.TextChoices):
         ACTIVE = 'active', ('Active')
         COMPLETED = 'completed', ('Completed')
@@ -34,7 +34,7 @@ class Projects(models.Model):
         return self.name
 
 
-class Tasks(models.Model):
+class Task(models.Model):
     class Status(models.TextChoices):
         TODO = 'todo', ('To Do')
         IN_PROGRESS = 'in_progress', ('In Progress')
@@ -61,7 +61,7 @@ class Tasks(models.Model):
         default=Priority.MEDIUM
     )
     project = models.ForeignKey(
-        Projects,
+        Project,
         on_delete=models.CASCADE,
         related_name='tasks',
         verbose_name=('Проект')

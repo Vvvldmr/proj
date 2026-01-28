@@ -6,8 +6,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container py-4">
-
-    <h1 class="mb-4">Мои проекты</h1>
+    
+    <!-- Шапка с информацией о пользователе -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Мои проекты</h1>
+        
+        <div>
+            {% if user.is_authenticated %}
+                <div class="d-flex align-items-center">
+                    <span class="me-3">Привет, <strong>{{ user.username }}</strong>!</span>
+                    <form method="post" action="{% url 'logout' %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                            Выйти
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <div>
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm me-2">Войти</a>
+                    <a href="{% url 'registration' %}" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Горизонтальная линия -->
+    <hr class="mb-4">
 
     {% block content %}
     {% endblock %}
