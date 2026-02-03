@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <div class="card shadow">
+            <div class="card-body p-5">
+                <h2 class="card-title mb-4">Добро пожаловать в Project Tracker</h2>
+                
+                <div class="mb-5">
+                    <p class="lead">Организуйте свои проекты и задачи в одном месте</p>
+                    <p class="text-muted">Создавайте проекты, добавляйте задачи, отслеживайте прогресс и управляйте своими проектами эффективно</p>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-md-4">
+                        <div class="p-3">
+                            <i class="bi bi-clipboard-check display-6 text-primary mb-3"></i>
+                            <h5>Управление проектами</h5>
+                            <p class="small">Создавайте и организуйте ваши проекты</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3">
+                            <i class="bi bi-list-task display-6 text-success mb-3"></i>
+                            <h5>Задачи</h5>
+                            <p class="small">Добавляйте задачи к каждому проекту</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3">
+                            <i class="bi bi-graph-up display-6 text-warning mb-3"></i>
+                            <h5>Отслеживание</h5>
+                            <p class="small">Следите за прогрессом выполнения</p>
+                        </div>
+                    </div>
+                </div>
+
+                {% if not user.is_authenticated %}
+                <div class="mt-4">
+                    <h4 class="mb-4">Начните работу прямо сейчас</h4>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'users:login' %}" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Войти
+                        </a>
+                        <a href="{% url 'users:registration' %}" class="btn btn-outline-primary btn-lg px-4">
+                            <i class="bi bi-person-plus me-2"></i>Регистрация
+                        </a>
+                    </div>
+                    <p class="text-muted mt-3">Для начала работы требуется авторизация</p>
+                </div>
+                {% else %}
+                <div class="mt-4">
+                    <div class="alert alert-success">
+                        <h4><i class="bi bi-check-circle me-2"></i>Вы успешно вошли в систему</h4>
+                        <p class="mb-0 mt-2">Теперь вы можете перейти к вашим проектам или создать новый</p>
+                    </div>
+                    <div class="mt-4">
+                        <a href="{% url 'projects:project_list' %}" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-folder me-2"></i>Мои проекты
+                        </a>
+                        <a href="{% url 'project_create' %}" class="btn btn-outline-primary btn-lg px-4 ms-2">
+                            <i class="bi bi-plus-circle me-2"></i>Создать проект
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+
+                <hr class="my-5">
+
+                <div class="text-muted">
+                    <h5>Как это работает?</h5>
+                    <ol class="list-unstyled mt-3">
+                        <li class="mb-2">1. Зарегистрируйтесь или войдите в систему</li>
+                        <li class="mb-2">2. Создайте новый проект</li>
+                        <li class="mb-2">3. Добавьте задачи к проекту</li>
+                        <li class="mb-2">4. Отмечайте выполненные задачи</li>
+                        <li class="mb-2">5. Следите за прогрессом в реальном времени</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

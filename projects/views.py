@@ -1,7 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from .models import Project, Task
+
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('projects:projects_list')
+    return render(request, 'home.html')
+
 
 class ProjectsList(LoginRequiredMixin, ListView):
     model = Project

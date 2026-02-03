@@ -8,7 +8,7 @@ class Project(models.Model):
         ON_HOLD = 'on_hold', ('On Hold')
 
     name = models.CharField(('Название'), max_length=50)
-    description = models.CharField(('Описание'), max_length=200)
+    description = models.TextField(('Описание'))
     status = models.CharField(
         ('Статус'),
         max_length=20,
@@ -46,7 +46,7 @@ class Task(models.Model):
         HIGH = 'high', ('High')
     
     name = models.CharField(('Название'), max_length=100)
-    description = models.CharField(('Описание'), max_length=500)
+    description = models.TextField(('Описание'))
     status = models.CharField(
         ('Статус'),
         max_length=20,

@@ -5,7 +5,7 @@
         <ul class="list-group">
             {% for project in projects %}
                 <li class="list-group-item">
-                    <a href="{% url 'project_deteil' project.id %}">{{ project.name }}</a>
+                    <a href="{% url 'projects:project_deteil' project.id %}">{{ project.name }}</a>
                 </li>
             {% endfor %}
         </ul>
