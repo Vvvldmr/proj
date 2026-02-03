@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <p><a href="{% url 'projects:create_project'%}">Создать новый проект</p>
     {% if projects %}
         <ul class="list-group">
             {% for project in projects %}
