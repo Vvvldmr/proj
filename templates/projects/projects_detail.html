@@ -10,8 +10,9 @@
                 <p><strong>Статус проекта:</strong> 
                     <span class="badge 
                         {% if project.status == 'active' %}bg-success
+                        {% elif project.status == 'on_hold' %}bg-warning
                         {% elif project.status == 'completed' %}bg-primary
-                        {% else %}bg-warning{% endif %}">
+                        {% else %}bg-secondary{% endif %}">
                         {{ project.get_status_display }}
                     </span>
                 </p>
@@ -82,8 +83,41 @@
         </div>
     </div>
 
-    <br>
-    <a href="{% url 'projects:projects_list' %}" class="btn btn-secondary">
-        ← Назад к списку проектов
-    </a>
+    <!-- Кнопки действий -->
+    <div class="d-flex justify-content-between mt-4">
+        <div>
+            <a href="{% url 'projects:projects_list' %}" class="btn btn-secondary">
+                ← Назад к списку проектов
+            </a>
+        </div>
+        
+        <div>
+            {% if project.status == 'active' %}
+            <form method="post" action="{% url 'projects:pause_project' project.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">
+                    ⏸️ Поставить на паузу
+                </button>
+            </form>
+            {% elif project.status == 'on_hold' %}
+            <form method="post" action="{% url 'projects:activate_project' project.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">
+                    ▶️ Возобновить проект
+                </button>
+            </form>
+            {% endif %}
+        </div>
+        
+        <div>
+            {% if project.status != 'completed' %}
+            <form method="post" action="{% url 'projects:complete_project' project.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">
+                    ✅ Завершить проект
+                </button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

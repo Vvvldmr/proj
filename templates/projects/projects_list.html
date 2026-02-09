@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p><a href="{% url 'projects:create_project'%}">Создать новый проект</p>
+    <p><a href="{% url 'projects:create_project'%}">Создать новый проект</a></p>
+    
     {% if projects %}
         <ul class="list-group">
             {% for project in projects %}
-                <li class="list-group-item">
-                    <a href="{% url 'projects:project_deteil' project.id %}">{{ project.name }}</a>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'projects:project_detail' project.id %}">{{ project.name }}</a>
+                    
+                    <span class="badge 
+                        {% if project.status == 'active' %}bg-success
+                        {% elif project.status == 'completed' %}bg-secondary
+                        {% elif project.status == 'on_hold' %}bg-warning text-dark
+                        {% else %}bg-light text-dark{% endif %}">
+                        {{ project.get_status_display }}
+                    </span>
                 </li>
             {% endfor %}
         </ul>

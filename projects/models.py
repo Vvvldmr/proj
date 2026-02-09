@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 
 class Project(models.Model):
     class Status(models.TextChoices):
-        ACTIVE = 'active', ('Active')
-        COMPLETED = 'completed', ('Completed')
-        ON_HOLD = 'on_hold', ('On Hold')
+        ACTIVE = 'active', ('Активный')
+        COMPLETED = 'completed', ('Завершенный')
+        ON_HOLD = 'on_hold', ('На паузе')
 
-    name = models.CharField(('Название'), max_length=50)
+    name = models.CharField(('Название'), max_length=50) 
     description = models.TextField(('Описание'))
     status = models.CharField(
         ('Статус'),
