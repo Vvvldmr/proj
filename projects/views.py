@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from .models import Project, Task
-from .forms import CreateProjectForm
+from .forms import CreateProjectForm, CreateTaskForm
 
 def home(request):
     if request.user.is_authenticated:
@@ -53,6 +53,42 @@ class CreateProjectView(CreateView):
         project.owner = self.request.user
         project.save()
         return super().form_valid(form)
+    
+
+class TaskDetailView(LoginRequiredMixin, DetailView):
+    model = Task
+    template_name = 'projects/task_detail.html'
+    context_object_name = 'task'
+
+    def post(self, request, *args, **kwargs):
+        task = self.get_object()
+        new_status = request.POST.get('status')
+        
+        if new_status in dict(Task.Status.choices):
+            task.status = new_status
+            task.save()
+            messages.success(request, f'Статус задачи изменен на "{task.get_status_display()}"')
+        
+        return redirect('projects:task_detail', pk=task.pk)
+    
+
+def create_task(request, project_id):
+    if request.method == 'POST':
+        form = CreateTaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.project_id = project_id
+            task.created_by = request.user
+            task.save()
+            return redirect('projects:project_detail', pk=project_id)
+    else:
+        form = CreateTaskForm()
+    
+    project = Project.objects.get(id=project_id)
+    return render(request, 'projects/create_task.html', {
+        'form': form,
+        'project': project
+    })
     
 
 def pause_project(request, pk):

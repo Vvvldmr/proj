@@ -36,14 +36,14 @@ class Project(models.Model):
 
 class Task(models.Model):
     class Status(models.TextChoices):
-        TODO = 'todo', ('To Do')
-        IN_PROGRESS = 'in_progress', ('In Progress')
-        DONE = 'done', ('Done')
+        TODO = 'todo', ('Сделать')
+        IN_PROGRESS = 'in_progress', ('В процессе')
+        DONE = 'done', ('Готово')
     
     class Priority(models.TextChoices):
-        LOW = 'low', ('Low')
-        MEDIUM = 'medium', ('Medium')
-        HIGH = 'high', ('High')
+        LOW = 'low', ('Низкий приоритет')
+        MEDIUM = 'medium', ('Средний приоритет')
+        HIGH = 'high', ('Высокий приоритет')
     
     name = models.CharField(('Название'), max_length=100)
     description = models.TextField(('Описание'))
