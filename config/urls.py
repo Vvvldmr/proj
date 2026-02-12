@@ -23,4 +23,5 @@ urlpatterns = [
     path('', projects_views.home, name='home'),
     path('projects/', include('projects.urls')),
     path('accounts/', include('users.urls')),
+    path('api/', include('project_api.urls')),
 ]
